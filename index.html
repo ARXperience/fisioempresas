@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FisioEmpresas | Bienestar Corporativo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos Generales (como antes, con pequeños ajustes) */
+        :root {
+            --primary-color: #005A8D; /* Azul corporativo oscuro */
+            --secondary-color: #28a745; /* Verde salud */
+            --light-bg: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        h2.section-title {
+            text-align: center;
+            margin-bottom: 50px; /* Aumentado un poco el margen */
+            font-size: 2.6em; /* Ligeramente más grande */
+            font-weight: 600;
+        }
+        h2.section-title::after { /* Pequeño detalle subrayado */
+            content: '';
+            display: block;
+            width: 70px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+
+        /* Header / Navegación */
+        header {
+            background: var(--card-bg);
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        header .logo { font-size: 1.8em; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+        header .logo i { color: var(--secondary-color); }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: color 0.3s ease; }
+        nav ul li a:hover, nav ul li a.active { color: var(--secondary-color); }
+
+        /* Sección Hero */
+        .hero {
+            background: linear-gradient(rgba(0, 90, 141, 0.75), rgba(0, 90, 141, 0.75)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9kZXJuJTIwb2ZmaWNlJTIwdGVhbXxlbnwwfHwwfHx8MA&auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+            color: var(--card-bg);
+            padding: 100px 0; /* Más padding */
+            text-align: center;
+        }
+        .hero h1 { font-size: 3.2em; margin-bottom: 20px; color: var(--card-bg); font-weight: 700; }
+        .hero p { font-size: 1.3em; margin-bottom: 35px; max-width: 700px; margin-left: auto; margin-right: auto; opacity: 0.9; }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--card-bg);
+            padding: 14px 28px; /* Ligeramente más grande */
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background: #1f7c33; transform: translateY(-3px); }
+        .btn-secondary { background: #007bff; }
+        .btn-secondary:hover { background: #0056b3; }
+        .btn-small { padding: 8px 18px; font-size: 0.95em; }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-top: 15px; }
+        .btn-outline:hover { background-color: var(--primary-color); color: var(--card-bg); border-color: var(--primary-color); }
+
+        /* Sección Servicios */
+        .services { padding: 70px 0; background-color: var(--card-bg); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; text-align: left; }
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-card:hover { transform: translateY(-7px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .service-card img { width: 100%; height: 200px; object-fit: cover; }
+        .service-card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .service-card h3 { margin-top: 0; font-size: 1.6em; margin-bottom: 15px; }
+        .service-card p { font-size: 1em; color: #555; margin-bottom: 20px; flex-grow: 1; }
+
+        /* --- NUEVA SECCIÓN DE VIDEO "CONÓCENOS" --- */
+        .video-intro-section {
+            padding: 80px 0;
+            background: var(--primary-color); /* Fondo oscuro para destacar */
+            color: var(--card-bg);
+            text-align: center;
+        }
+        .video-intro-section h2 {
+            color: var(--card-bg); /* Título en blanco */
+        }
+        .video-intro-section h2::after { /* Detalle subrayado en color secundario */
+            background-color: var(--secondary-color);
+        }
+        .video-intro-section p.lead {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            opacity: 0.9;
+        }
+        .video-thumbnail-container {
+            position: relative;
+            max-width: 700px; /* Ancho de la miniatura */
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+        .video-thumbnail-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        .video-thumbnail-container:hover img {
+            transform: scale(1.05);
+        }
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px; /* Tamaño del icono de play */
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px rgba(0,0,0,0.5);
+            pointer-events: none; /* Para que el clic pase a la imagen */
+        }
+
+        /* --- MODAL PARA EL VIDEO A PANTALLA COMPLETA --- */
+        .video-modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro semi-transparente */
+            z-index: 2000; /* Por encima de todo */
+            justify-content: center;
+            align-items: center;
+        }
+        .video-modal.active {
+            display: flex; /* Mostrar cuando tenga la clase active */
+        }
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px; /* Ancho máximo del video */
+            height: 0;
+            padding-bottom: 50.625%; /* Proporción 16:9 (900/16*9 = 506.25, 506.25/1000 * 100 = 50.625%) */
+            background-color: #000;
+        }
+        .video-modal-content iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 35px;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 2010;
+        }
+        .close-modal-btn:hover {
+            color: var(--secondary-color);
+        }
+
+
+        /* --- NUEVA SECCIÓN DE BLOG --- */
+        .blog-section {
+            padding: 70px 0;
+            background-color: var(--light-bg); /* Un fondo ligeramente diferente */
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .blog-card img {
+            width: 100%;
+            height: 220px; /* Un poco más alta para el blog */
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card h3 {
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .blog-card .meta-info {
+            font-size: 0.85em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        .blog-card .meta-info i {
+            margin-right: 5px;
+        }
+        .blog-card .excerpt {
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .blog-card .btn-read-more {
+            align-self: flex-start; /* Alinea el botón a la izquierda */
+        }
+
+
+        /* Sección "Por qué elegirnos" (Beneficios) */
+        .why-us { background-color: #E0F2F7; padding: 70px 0; }
+        .why-us .intro-text { text-align: center; font-size: 1.15em; max-width: 750px; margin: 0 auto 40px auto; color: #444; }
+        .why-us ul { list-style: none; padding: 0; max-width: 800px; margin: 0 auto; }
+        .why-us ul li { font-size: 1.1em; margin-bottom: 18px; display: flex; align-items: flex-start; background-color: var(--card-bg); padding: 20px; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .why-us ul li i { color: var(--secondary-color); margin-right: 15px; font-size: 1.7em; min-width: 30px; margin-top: 3px; }
+
+        /* Sección Contacto */
+        .contact-section.hero { background: var(--primary-color); padding: 70px 0; } /* Clase específica */
+        .contact-section.hero h2 { color: var(--card-bg); font-size: 2.5em; }
+        .contact-section.hero h2::after { background-color: var(--secondary-color); }
+        .contact-section.hero p { color: rgba(255,255,255,0.9); font-size: 1.2em; max-width: 650px; margin-bottom: 40px; }
+        .contact-section.hero .btn { padding: 15px 30px; margin: 0 5px 10px 5px; }
+        .contact-section.hero p.phone-contact { font-size: 1.2em; margin-top: 30px; color: var(--card-bg); }
+        .contact-section.hero p.phone-contact a { color: var(--card-bg); text-decoration: underline; font-weight: bold; }
+
+
+        /* Footer */
+        footer { background: #333; color: var(--card-bg); text-align: center; padding: 40px 0; margin-top: 0; } /* margin-top 0 si la sección anterior es oscura */
+        footer p { margin: 8px 0; font-size: 0.95em; }
+        footer a { color: var(--secondary-color); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        footer .social-icons a { margin: 0 10px; font-size: 1.3em; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header .container { flex-direction: column; }
+            nav ul { margin-top: 15px; flex-direction: column; align-items: center; }
+            nav ul li { margin: 10px 0; }
+            .hero h1 { font-size: 2.5em; }
+            .hero p { font-size: 1.1em; }
+            .services-grid, .blog-grid { grid-template-columns: 1fr; }
+            h2.section-title { font-size: 2.1em; }
+            .video-modal-content { width: 95%; padding-bottom: 53.4375%; /* (950/16*9)/950 * 100 */ }
+            .close-modal-btn { top: 10px; right: 15px; font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#hero" class="logo"><i class="fas fa-clinic-medical"></i> FisioEmpresas</a>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#services">Servicios</a></li>
+                    <li><a href="#conocenos">Conócenos</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#why-us">Beneficios</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="container">
+            <h1>Bienestar y Productividad Sostenible para tu Equipo</h1>
+            <p>Soluciones innovadoras de fisioterapia corporativa que transforman la salud de tus empleados y potencian el rendimiento de tu empresa.</p>
+            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Consulta%20Fisioterapia%20Corporativa&details=Me%20gustar%C3%ADa%20agendar%20una%20consulta%20inicial%20para%20conocer%20sus%20servicios%20de%20fisioterapia%20para%20empresas.%0A%0APor%20favor%2C%20sugiera%20disponibilidad.%0A%0AEmpresa%3A%20[Tu%20Nombre%20de%20Empresa]&location=Online%20o%20en%20nuestras%20instalaciones" target="_blank" class="btn">
+                <i class="far fa-calendar-alt"></i> Solicitar Consulta Gratuita
+            </a>
+            <p style="font-size: 0.8em; margin-top: 15px; opacity: 0.8;">
+                (Ajusta fecha/hora y añade el nombre de tu empresa en Google Calendar)
+            </p>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios Integrales</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://fisioterapiamadridcentro.es/wp-content/uploads/2024/09/Fisioterapia-preventiva-en-Madrid.jpg.webp" alt="Mujer estirándose en su escritorio de oficina para prevenir lesiones">
+                    <div class="service-card-content">
+                        <h3>Fisioterapia Preventiva</h3>
+                        <p>Diseñamos programas proactivos para identificar y mitigar riesgos de lesiones musculoesqueléticas en el trabajo, enfocándonos en educación postural, ejercicios específicos y pausas activas.</p>
+                        <a href="#contact" class="btn btn-small btn-outline">Más Información</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://www.hcmarbella.com/wp-content/uploads/2018/01/rehabilitacion_fisioterapia.jpg" alt="Fisioterapeuta tratando la pierna de un paciente en camilla">
+                    <div class="service-card-content">
+                        <h3>Tratamiento de Lesiones</h3>
+                        <p>Ofrecemos rehabilitación especializada para lesiones laborales, utilizando técnicas avanzadas para acelerar la recuperación, reducir el dolor y facilitar un retorno seguro y eficiente al puesto de trabajo.</p>
+                        <a href="#contact" class="btn btn-small btn-outline">Más Información</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://udes.edu.co/images/programas/posgrados/especializacion-en-ergonomia.jpg" alt="Persona trabajando cómodamente en un puesto de trabajo ergonómico">
+                    <div class="service-card-content">
+                        <h3>Consultoría en Ergonomía</h3>
+                        <p>Realizamos análisis exhaustivos de los puestos de trabajo y recomendamos adaptaciones ergonómicas para optimizar el confort, prevenir trastornos y potenciar la productividad de sus empleados.</p>
+                        <a href="#contact" class="btn btn-small btn-outline">Más Información</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b2ZmaWNlJTIweW9nYXxlbnwwfHwwfHx8MA&auto=format&fit=crop&w=400&q=60" alt="Grupo de personas participando en un taller de yoga o bienestar en la oficina">
+                    <div class="service-card-content">
+                        <h3>Talleres de Bienestar Corporativo</h3>
+                        <p>Impartimos talleres interactivos y dinámicos sobre temas clave como manejo del estrés, nutrición, mindfulness y fomento de hábitos saludables, adaptados a las necesidades de su organización.</p>
+                        <a href="#contact" class="btn btn-small btn-outline">Más Información</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="conocenos" class="video-intro-section">
+        <div class="container">
+            <h2 class="section-title">Descubre FisioEmpresas en Acción</h2>
+            <p class="lead">Somos más que fisioterapeutas; somos partners en el bienestar y la productividad de tu empresa. Mira cómo podemos ayudarte a crear un entorno laboral más saludable y motivador.</p>
+            <div class="video-thumbnail-container" id="openVideoModal">
+                <!-- REEMPLAZA ESTA IMAGEN con una miniatura atractiva de tu video -->
+                <img src="https://img.youtube.com/vi/z4nO6cmh0_g/maxresdefault.jpg" alt="Presentación FisioEmpresas - Haz clic para ver el video">
+                <div class="play-button-overlay">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para el Video -->
+    <div class="video-modal" id="videoModal">
+        <button class="close-modal-btn" id="closeVideoModal" aria-label="Cerrar video">×</button>
+        <div class="video-modal-content">
+            <!-- El iframe se insertará aquí con JavaScript para mejor control -->
+            <iframe id="youtubeVideo" width="560" height="315" src="" title="Video presentación FisioEmpresas" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <section id="blog" class="blog-section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Blog: Ideas y Consejos de Expertos</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <!-- Reemplaza con imagen real del artículo -->
+                    <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZXJnb25vbWljc3xlbnwwfHwwfHx8MA&auto=format&fit=crop&w=400&q=60" alt="Ergonomía en la oficina">
+                    <div class="blog-card-content">
+                        <h3>5 Claves Ergonómicas para un Espacio de Trabajo Saludable</h3>
+                        <div class="meta-info">
+                            <i class="fas fa-calendar-alt"></i> 15 Oct, 2023 | <i class="fas fa-user"></i> Dr. Bienestar
+                        </div>
+                        <p class="excerpt">Descubre cómo pequeños ajustes en tu puesto de trabajo pueden marcar una gran diferencia en tu comodidad y prevenir dolores de espalda y cuello. ¡Invierte en tu salud postural!</p>
+                        <a href="#contact" class="btn btn-small btn-outline btn-read-more">Leer Más</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <!-- Reemplaza con imagen real del artículo -->
+                    <img src="https://seguridadocupacionacies.wordpress.com/wp-content/uploads/2019/09/pausas-activasw.jpg?w=640" alt="Pausas activas en el trabajo">
+                    <div class="blog-card-content">
+                        <h3>El Poder de las Pausas Activas: Energía y Prevención en tu Jornada</h3>
+                        <div class="meta-info">
+                            <i class="fas fa-calendar-alt"></i> 28 Sep, 2023 | <i class="fas fa-user"></i> FisioPro Activo
+                        </div>
+                        <p class="excerpt">Incorporar breves pausas activas durante el día laboral no solo combate el sedentarismo, sino que mejora la concentración, reduce el estrés y previene lesiones. Te enseñamos cómo.</p>
+                        <a href="#contact" class="btn btn-small btn-outline btn-read-more">Leer Más</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <!-- Reemplaza con imagen real del artículo -->
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29ycG9yYXRlJTIwd2VsbG5lc3N8ZW58MHx8MHx8fDA&auto=format&fit=crop&w=400&q=60" alt="Cultura de bienestar empresarial">
+                    <div class="blog-card-content">
+                        <h3>Fomentando una Cultura de Bienestar: El Rol Clave de la Fisioterapia</h3>
+                        <div class="meta-info">
+                            <i class="fas fa-calendar-alt"></i> 10 Sep, 2023 | <i class="fas fa-user"></i> Equipo FisioEmpresas
+                        </div>
+                        <p class="excerpt">Una cultura de bienestar va más allá de beneficios aislados. La fisioterapia corporativa es una inversión estratégica que demuestra compromiso con la salud integral de tus empleados.</p>
+                        <a href="#contact" class="btn btn-small btn-outline btn-read-more">Leer Más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="why-us">
+        <div class="container">
+            <h2 class="section-title">Beneficios Clave para tu Empresa</h2>
+            <p class="intro-text">Invertir en fisioterapia corporativa con FisioEmpresas se traduce en ventajas tangibles para tu organización y tus empleados. Te ofrecemos:</p>
+            <ul>
+                <li><i class="fas fa-user-md"></i> Profesionales altamente cualificados, colegiados y con especialización en salud laboral y corporativa.</li>
+                <li><i class="fas fa-users-cog"></i> Programas 100% personalizados, diseñados tras un análisis detallado de las necesidades de tu empresa y equipo.</li>
+                <li><i class="fas fa-chart-line"></i> Impacto positivo y medible: reducción del absentismo, aumento de la moral y mejora de la productividad general.</li>
+                <li><i class="fas fa-heartbeat"></i> Fomento de una cultura empresarial centrada en el bienestar integral y la prevención proactiva de la salud.</li>
+                <li><i class="fas fa-handshake-angle"></i> Flexibilidad total: servicios in-company para minimizar interrupciones o en nuestras modernas instalaciones.</li>
+                <li><i class="fas fa-shield-alt"></i> Entornos de trabajo más seguros y saludables, cumpliendo con las mejores prácticas en prevención de riesgos.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section hero"> <!-- Añadida clase contact-section -->
+        <div class="container">
+            <h2 class="section-title">¿Listo para Potenciar el Bienestar en tu Empresa?</h2>
+            <p>Contacta con nuestro equipo de expertos. Estamos aquí para asesorarte y diseñar juntos el plan de fisioterapia corporativa que tu organización necesita para prosperar.</p>
+            <a href="mailto:info@fisioempresas.com?subject=Solicitud%20de%20Informacion%20Servicios%20Fisioterapia%20Corporativa" class="btn btn-secondary">
+                <i class="fas fa-envelope"></i> Enviar Email Ahora
+            </a>
+            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Consulta%20Fisioterapia%20Corporativa&details=Me%20gustar%C3%ADa%20agendar%20una%20consulta%20inicial%20para%20conocer%20sus%20servicios%20de%20fisioterapia%20para%20empresas.%0A%0APor%20favor%2C%20sugiera%20disponibilidad.%0A%0AEmpresa%3A%20[Tu%20Nombre%20de%20Empresa]&location=Online%20o%20en%20nuestras%20instalaciones" target="_blank" class="btn">
+                <i class="far fa-calendar-alt"></i> Agendar Videollamada
+            </a>
+            <p class="phone-contact">O si prefieres, llámanos al: <a href="tel:+34000000000">+34 000 000 000</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 FisioEmpresas. Todos los derechos reservados.</p>
+            <p>Avenida Principal 123, Ciudad, País | <a href="mailto:info@fisioempresas.com">info@fisioempresas.com</a> | <a href="tel:+34000000000">+34 000 000 000</a></p>
+            <div class="social-icons">
+                Síguenos en: 
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> 
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a> 
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Diseñado con <i class="fas fa-heart" style="color: #e25555;"></i> para tu Bienestar Corporativo.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Smooth scroll para anclas
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = document.querySelector('header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Actualizar clase 'active' en la navegación
+                        document.querySelectorAll('nav ul li a').forEach(navLink => navLink.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Funcionalidad del Modal de Video
+            const openVideoModalBtn = document.getElementById('openVideoModal');
+            const videoModal = document.getElementById('videoModal');
+            const closeModalBtn = document.getElementById('closeVideoModal');
+            const youtubeVideo = document.getElementById('youtubeVideo');
+            // REEMPLAZA ESTA URL por la URL "embed" de tu video de YouTube
+            const videoSrc = "https://www.youtube.com/embed/z4nO6cmh0_g"; 
+            // Para autoplay y otros parámetros: const videoSrc = "https://www.youtube.com/embed/z4nO6cmh0_g?autoplay=1";
+
+            if (openVideoModalBtn && videoModal && closeModalBtn && youtubeVideo) {
+                openVideoModalBtn.addEventListener('click', () => {
+                    youtubeVideo.src = videoSrc; // Asigna el src al abrir para evitar carga innecesaria
+                    videoModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Evitar scroll del fondo
+                });
+
+                closeModalBtn.addEventListener('click', () => {
+                    videoModal.classList.remove('active');
+                    youtubeVideo.src = ""; // Detiene el video al quitar el src
+                    document.body.style.overflow = 'auto';
+                });
+
+                // Cerrar modal si se hace clic fuera del contenido del video (opcional)
+                videoModal.addEventListener('click', (event) => {
+                    if (event.target === videoModal) { // Si el clic es en el fondo del modal
+                        videoModal.classList.remove('active');
+                        youtubeVideo.src = ""; 
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            // Active link en scroll (opcional, para mejor UX)
+            const sections = document.querySelectorAll('section[id]');
+            window.addEventListener('scroll', navHighlighter);
+
+            function navHighlighter() {
+                let scrollY = window.pageYOffset;
+                const headerOffset = document.querySelector('header').offsetHeight;
+
+                sections.forEach(current => {
+                    const sectionHeight = current.offsetHeight;
+                    const sectionTop = current.getBoundingClientRect().top + window.pageYOffset - headerOffset - 70; // 70 es un offset adicional
+                    let sectionId = current.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        document.querySelector('nav ul li a[href*=' + sectionId + ']').classList.add('active');
+                    } else {
+                        document.querySelector('nav ul li a[href*=' + sectionId + ']').classList.remove('active');
+                    }
+                });
+                 // Caso especial para el hero, si está en la parte superior
+                if (scrollY < sections[0].getBoundingClientRect().top + window.pageYOffset - headerOffset - 70 + sections[0].offsetHeight) {
+                     const heroLink = document.querySelector('nav ul li a[href="#hero"]');
+                     if(heroLink) heroLink.classList.add('active');
+                } else {
+                     const heroLink = document.querySelector('nav ul li a[href="#hero"]');
+                     if(heroLink) heroLink.classList.remove('active');
+                }
+
+            }
+
+
+        });
+    </script>
+
+</body>
+</html>
